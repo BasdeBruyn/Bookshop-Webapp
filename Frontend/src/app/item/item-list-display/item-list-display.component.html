@@ -1,0 +1,28 @@
+<!--<button class="btn btn-primary" (click)="onAuth()">authorize</button>-->
+<div class="row d-flex justify-content-center mt-2 mx-0">
+  <button class="btn btn-success" (click)="onAddNewItem()">Add new Item</button>
+</div>
+<div class="row col-sm-12 d-inline-flex justify-content-start flex-wrap">
+  <div *ngFor="let item of items; let i = index" class="my-3">
+    <a [routerLink]="['/items', i]">
+      <div class="col-sm-6">
+        <div class="card mx-3 item-card">
+          <div class="img-container">
+            <img class="card-img-top mt-2"
+                 [src]="item.url" alt="item image"/>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ item.name }}
+              <span class="badge">${{ (item.price/100).toFixed(2) }}</span>
+            </h5>
+            <p class="card-text">
+              {{ item.description | shorten:100 }}
+            </p>
+            <span class="badge badge-success" *ngIf="item.available">available</span>
+            <span class="badge badge-danger" *ngIf="!item.available">unavailable</span>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
