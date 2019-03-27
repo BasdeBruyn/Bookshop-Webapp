@@ -1,0 +1,20 @@
+<div class="col-6 mx-auto">
+  <div class="d-flex" *ngFor="let item of _items; let i = index">
+    <div class="card flex-row flex-wrap col-11 mb-3">
+      <div class="card-header border-0">
+        <img style="max-height: 80px" [src]="item.url" alt="item image">
+      </div>
+      <div class="card-block px-2">
+        <h3 class="card-title">{{ item.name }}</h3>
+        <p class="card-text">${{ (item.price/100).toFixed(2) }}</p>
+      </div>
+      <div class="w-100"></div>
+    </div>
+    <button style="max-width: 30px; max-height: 30px"
+            class="col-1 my-auto btn btn-danger ml-3 btn-sm"
+            (click)="onRemove(i)">X</button>
+  </div>
+  <button class="btn btn-primary btn-block mb-3"
+          [routerLink]="['checkout']">Go to checkout</button>
+</div>
+

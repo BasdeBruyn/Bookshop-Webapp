@@ -1,0 +1,146 @@
+<div class="col-6 mx-auto">
+  <h1 class="text-center">Delivery Info</h1>
+  <hr>
+  <form (ngSubmit)="onSubmit()" #form="ngForm">
+    <div class="row">
+      <div class="col-5">
+        <div class="form-group">
+          <label for="firstName">First name:</label>
+          <input class="form-control"
+                 type="text"
+                 name="firstName"
+                 id="firstName"
+                 required
+                 pattern="[A-Za-z ]{2,}"
+                 ngModel
+                 #firstName="ngModel">
+          <span class="help-block error"
+                *ngIf="!firstName.valid && firstName.touched"
+          >Invalid name!</span>
+        </div>
+      </div>
+      <div class="col-7">
+        <div class="form-group">
+          <label for="lastName">Last name:</label>
+          <input class="form-control"
+                 type="text"
+                 name="lastName"
+                 id="lastName"
+                 required
+                 pattern="[A-Za-z ]{2,}"
+                 ngModel
+                 #lastName="ngModel">
+          <span class="help-block error"
+                *ngIf="!lastName.valid && lastName.touched"
+          >Invalid name!</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        <div class="form-group">
+          <label for="postalCode">Postal code:</label>
+          <input class="form-control"
+                 type="text"
+                 name="postalCode"
+                 id="postalCode"
+                 pattern="^[1-9][0-9]{3} ?[A-Z]{2}$"
+                 minlength="6"
+                 maxlength="7"
+                 required
+                 ngModel
+                 #postalCode="ngModel">
+          <span class="help-block error"
+                *ngIf="!postalCode.valid && postalCode.touched"
+          >Invalid postal code!</span>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="form-group">
+          <label for="houseNr">House number:</label>
+          <input class="form-control"
+                 type="text"
+                 name="houseNr"
+                 id="houseNr"
+                 required
+                 pattern="[1-9][0-9]{0,2}[ ]?[A-Za-z]?"
+                 ngModel
+                 #houseNr="ngModel">
+          <span class="help-block error"
+                *ngIf="!houseNr.valid && houseNr.touched"
+          >Invalid house number!</span>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="streetName">Street name:</label>
+          <input class="form-control"
+                 type="text"
+                 name="streetName"
+                 id="streetName"
+                 required
+                 pattern="[A-Za-z ]{2,}"
+                 ngModel
+                 #streetName="ngModel">
+          <span class="help-block error"
+                *ngIf="!streetName.valid && streetName.touched"
+          >Invalid street name!</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-8">
+        <div class="form-group">
+          <label for="residence">Residence:</label>
+          <input class="form-control"
+                 type="text"
+                 name="residence"
+                 id="residence"
+                 pattern="[A-Za-z ]{2,}"
+                 required
+                 ngModel
+                 #residence="ngModel">
+          <span class="help-block error"
+                *ngIf="!residence.valid && residence.touched"
+          >Invalid residence!</span>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <label for="phoneNr">Phone number:</label>
+          <input class="form-control"
+                 type="text"
+                 name="phoneNr"
+                 id="phoneNr"
+                 required
+                 pattern="^(((0)[1-9]{2}[0-9][-]?[1-9][0-9]{5})|((\+31|0|0031)[1-9][0-9][-]?[1-9][0-9]{6}))$|^(((\\+31|0|0031)6){1}[1-9]{1}[0-9]{7})$"
+                 ngModel
+                 #phoneNr="ngModel">
+          <span class="help-block error"
+                *ngIf="!phoneNr.valid && phoneNr.touched"
+          >Invalid phone number!</span>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div *ngFor="let item of _items; let i = index">
+      <div class="row">
+        <div class="col-9">
+          <h5>{{ item.name }}</h5>
+        </div>
+        <div class="col-3 text-right">
+          + ${{ (item.price/100).toFixed(2) }}
+        </div>
+      </div>
+    </div>
+    <hr class="mb-1 mt-1" style="background-color: black">
+    <div class="row">
+      <div class="col-8">Total:</div>
+      <div class="col-4 text-right">${{ (_totalPrice/100).toFixed(2) }}</div>
+    </div>
+    <input [disabled]="!form.valid"
+           type="submit"
+           value="Order"
+           class="btn btn-primary btn-block my-3">
+  </form>
+</div>

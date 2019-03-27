@@ -1,11 +1,9 @@
 package nl.IPWRC.persistance;
 
-import com.google.common.collect.ImmutableList;
 import io.dropwizard.hibernate.AbstractDAO;
-import nl.IPWRC.models.Customer;
-import nl.IPWRC.models.Item;
 import org.hibernate.SessionFactory;
 
+import org.hibernate.query.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -13,11 +11,6 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 public abstract class GenericDao<T> extends AbstractDAO<T> {
-
-    private static final ImmutableList<Class> entities = ImmutableList.of(
-            Item.class,
-            Customer.class
-    );
     
     public GenericDao(SessionFactory sessionFactory) {
         super(sessionFactory);
@@ -49,7 +42,16 @@ public abstract class GenericDao<T> extends AbstractDAO<T> {
         currentSession().delete(t);
     }
 
-    protected abstract Class<T> getTypeClass();
+    public void delete(Integer id) {
+        String query = "delete from " + getClassName() + " t where t.id = :id";
+        Query<T> queryObj = currentSession().createQuery(query, getTypeClass());
+        queryObj.setParameter("id", id);
+        queryObj.executeUpdate();
+    }
 
-    public static ImmutableList<Class> getEntities() { return entities; }
+    private String getClassName() {
+        return getTypeClass().getSimpleName();
+    }
+
+    protected abstract Class<T> getTypeClass();
 }

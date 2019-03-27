@@ -1,13 +1,9 @@
 import {RouterModule, Routes} from '@angular/router';
-import {ItemListDisplayComponent} from '../item/item-list-display/item-list-display.component';
 import {NgModule} from '@angular/core';
+import {AuthComponent} from './login-register/auth.component';
 
 const routes: Routes = [
-  { path: '/auth', component: ItemListDisplayComponent, children: [
-      { path: 'new', component: ItemListDisplayComponent},
-      { path: ':id', component: ItemListDisplayComponent},
-      { path: ':id/edit', component: ItemListDisplayComponent},
-    ]}
+  { path: 'auth/:login', component: AuthComponent }
 ];
 
 @NgModule({

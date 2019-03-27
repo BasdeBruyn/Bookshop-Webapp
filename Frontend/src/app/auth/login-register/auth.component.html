@@ -1,0 +1,71 @@
+<div class="d-flex justify-content-center">
+  <div class="col-6 card pb-3">
+    <div class="card-title">
+      <h1 *ngIf="_loginMode">Login</h1>
+      <h1 *ngIf="!_loginMode">Register</h1>
+      <span class="help-block error"
+            *ngIf="_invalidLogin"
+      >Invalid email or password!</span>
+    </div>
+    <form (ngSubmit)="onSubmit()" #form="ngForm">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input class="form-control"
+               type="text"
+               id="email"
+               name="email"
+               ngModel
+               email
+               required
+               (change)="_duplicateEmail = false;
+                         _invalidLogin = false"
+               #email="ngModel">
+        <span class="help-block error"
+              *ngIf="!email.valid && email.touched"
+        >Invalid email address!</span>
+        <span class="help-block error"
+              *ngIf="_duplicateEmail"
+        >Email already exists!</span>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input class="form-control"
+               type="password"
+               [type]="_passwordShown ? 'text' : 'password'"
+               id="password"
+               name="password"
+               ngModel
+               pattern="\w{5,}"
+               required
+               (change)="_passwordShown = false;
+                         _invalidLogin = false"
+               #password="ngModel">
+        <input
+          type="button"
+          class="btn btn-sm"
+          value="Show Password"
+          [ngClass]="_passwordShown ? 'btn-grey' : 'btn-dark'"
+          (click)="_passwordShown = !_passwordShown">
+        <span class="help-block error"
+              *ngIf="!password.valid && password.touched"
+        >Invalid password!</span>
+      </div>
+      <br>
+      <input *ngIf="_loginMode"
+             type="submit"
+             class="btn btn-success btn-block"
+             name="login"
+             value="Login"
+             [disabled]="!form.valid">
+      <input *ngIf="!_loginMode"
+             type="submit"
+             class="btn btn-success btn-block"
+             name="register"
+             value="Register"
+             [disabled]="!form.valid">
+    </form>
+    <h6 *ngIf="_loginMode">Don't have an account jet? Register <a [routerLink]="['/auth', false]">here</a>.</h6>
+    <h6 *ngIf="!_loginMode">Already have an account? Login <a [routerLink]="['/auth', true]">here</a>.</h6>
+  </div>
+</div>

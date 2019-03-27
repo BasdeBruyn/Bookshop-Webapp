@@ -7,6 +7,10 @@ import { ItemEditComponent } from './item-edit/item-edit.component';
 import {ItemComponent} from './item.component';
 import {FormsModule} from '@angular/forms';
 import { ItemDisplayComponent } from './item-display/item-display.component';
+import {AuthGuard} from '../auth/auth-guard.service';
+import {AuthService} from '../auth/auth.service';
+import {AdminGuard} from '../auth/admin-guard.service';
+import {CartService} from '../cart/cart.service';
 
 @NgModule({
   declarations: [
@@ -20,6 +24,12 @@ import { ItemDisplayComponent } from './item-display/item-display.component';
     CommonModule,
     ItemRoutingModule,
     FormsModule
+  ],
+  providers: [
+    AuthGuard,
+    AuthService,
+    AdminGuard,
+    CartService
   ]
 })
 export class ItemModule { }

@@ -1,10 +1,22 @@
-<!--<button class="btn btn-primary" (click)="onAuth()">authorize</button>-->
+<button class="btn"
+        (click)="onAuth()"
+        [ngClass]="_isAuthorized ? 'btn-success': 'btn-primary'"
+>authorize</button>
+<button class="btn"
+        (click)="onAdmin()"
+        [ngClass]="_isAdmin ? 'btn-success': 'btn-primary'"
+>admin</button>
+<button class="btn btn-dark"
+        [routerLink]="['/cart']"
+>admin</button>
 <div class="row d-flex justify-content-center mt-2 mx-0">
-  <button class="btn btn-success" (click)="onAddNewItem()">Add new Item</button>
+  <button *ngIf="_isAdmin"
+          class="btn btn-success"
+          (click)="onAddNewItem()">Add new Item</button>
 </div>
 <div class="row col-sm-12 d-inline-flex justify-content-start flex-wrap">
-  <div *ngFor="let item of items; let i = index" class="my-3">
-    <a [routerLink]="['/items', i]">
+  <div *ngFor="let item of _items; let i = index" class="my-3">
+    <a (click)="onItemClicked(i)" style="cursor: pointer">
       <div class="col-sm-6">
         <div class="card mx-3 item-card">
           <div class="img-container">
@@ -13,7 +25,7 @@
           </div>
           <div class="card-body">
             <h5 class="card-title">{{ item.name }}
-              <span class="badge">${{ (item.price/100).toFixed(2) }}</span>
+              <span>${{ (item.price/100).toFixed(2) }}</span>
             </h5>
             <p class="card-text">
               {{ item.description | shorten:100 }}

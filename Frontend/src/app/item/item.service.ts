@@ -16,37 +16,32 @@ export class ItemService {
     'ere cubilia Curae; Integer mollis quam ac nisi condimentum, sed vehicula risus lobortis.';
 
   private _items: Item[] = [
-    new Item(1, 'Algorithms', 7000, this.lorumIpsum, 'https://algs4.cs.princeton.edu/cover.png', true),
-    new Item(1, 'Fundamentals of database systems', 8000,
-      this.lorumIpsum, 'https://mediaserver.123library.org/9781292097626/cover/9781292097626.png', true),
+    new Item('Algorithms', 7000, this.lorumIpsum, 'https://algs4.cs.princeton.edu/cover.png', true),
+    new Item('Fundamentals of database systems', 8000,
+      this.lorumIpsum, 'https://mediaserver.123library.org/9781292097626/cover/9781292097626.png', false)
   ];
 
   private _itemsObservable = new Subject<Item[]>();
-
-  get itemsObservable(): Subject<Item[]> {
-    return this._itemsObservable;
-  }
-
-  get items(): Item[] {
-    return this._items;
-  }
 
   addItem(item: Item) {
     this._items.push(item);
     this.itemsUpdated();
   }
 
-  updateItem(item: Item, id: number) {
-    this._items[id] = item;
+  updateItem(item: Item, index: number) {
+    this._items[index] = item;
     this.itemsUpdated();
   }
 
-  removeItem(id: number) {
-    this._items.splice(id, 1);
+  removeItem(index: number) {
+    this._items.splice(index, 1);
     this.itemsUpdated();
   }
 
   itemsUpdated() {
     this._itemsObservable.next(this._items);
   }
+
+  get itemsObservable(): Subject<Item[]> { return this._itemsObservable; }
+  get items(): Item[] { return this._items; }
 }

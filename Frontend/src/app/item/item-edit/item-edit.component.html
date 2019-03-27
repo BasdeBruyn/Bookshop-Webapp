@@ -1,5 +1,5 @@
 <div class="row m-0">
-  <div class="col-sm-8 mx-auto mt-3">
+  <div class="col-8 mx-auto mt-3">
     <form (ngSubmit)="onSubmit()" #form="ngForm">
       <div class="form-group">
         <label for="name">Name:</label>
@@ -7,15 +7,27 @@
                type="text"
                name="name"
                id="name"
-               ngModel>
+               minlength="5"
+               required
+               ngModel
+               #name="ngModel">
+        <span class="help-block error"
+              *ngIf="!name.valid && name.touched"
+        >Name should be at least 5 characters long!</span>
       </div>
       <div class="form-group">
-        <label for="price">Price:</label>
+        <label for="price">Price (cents):</label>
         <input class="form-control"
                type="number"
                name="price"
                id="price"
-               ngModel>
+               pattern="[1-9][0-9]*"
+               required
+               ngModel
+               #price="ngModel">
+        <span class="help-block error"
+              *ngIf="!price.valid && price.touched"
+        >Price can't be 0!</span>
       </div>
       <div class="form-group">
         <label for="description">Description:</label>
@@ -32,7 +44,12 @@
                 type="text"
                 name="url"
                 id="image-URL"
-                ngModel>
+                required
+                ngModel
+                #imageUrl="ngModel">
+        <span class="help-block error"
+              *ngIf="!imageUrl.valid && imageUrl.touched"
+        >Image URL is required!</span>
       </div>
       <div class="form-check">
         <input class="form-check-input"
@@ -43,9 +60,13 @@
         <label  class="form-check-label" for="available">Available?</label>
       </div>
       <br>
-      <input type="submit" class="btn btn-success" name="save" value="Save">
+      <input [disabled]="!form.valid"
+             type="submit"
+             class="btn btn-success"
+             name="save"
+             value="Save">
       <button class="btn btn-primary mx-2" (click)="onCancel()">Cancel</button>
-      <button *ngIf="editMode" class="btn btn-danger" (click)="onDelete()">Delete</button>
+      <button *ngIf="_editMode" class="btn btn-danger" (click)="onDelete()">Delete</button>
     </form>
   </div>
   <div class="col-sm-3 m-auto">

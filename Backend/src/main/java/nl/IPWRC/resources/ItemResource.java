@@ -1,9 +1,11 @@
 package nl.IPWRC.resources;
 
 import io.dropwizard.hibernate.UnitOfWork;
-import nl.IPWRC.Services.ItemService;
+import nl.IPWRC.services.ItemService;
+import nl.IPWRC.exceptions.InvalidInputException;
 import nl.IPWRC.models.Item;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -16,8 +18,8 @@ public class ItemResource {
 
     private final ItemService itemService;
 
-    public ItemResource(ItemService itemService) {
-        this.itemService = itemService;
+    public ItemResource() {
+        itemService = ItemService.getInstance();
     }
 
     @GET
@@ -35,13 +37,15 @@ public class ItemResource {
 
     @POST
     @UnitOfWork
-    public Integer save(@Valid Item item){
+    @RolesAllowed("admin")
+    public Integer save(@Valid Item item) throws InvalidInputException {
         return itemService.save(item).getId();
     }
 
     @PUT
     @UnitOfWork
-    public Item update(@Valid Item item) {
+    @RolesAllowed("admin")
+    public Item update(@Valid Item item) throws InvalidInputException {
         itemService.update(item);
 
         return item;
@@ -50,6 +54,7 @@ public class ItemResource {
     @DELETE
     @Path("/{id}")
     @UnitOfWork
+    @RolesAllowed("admin")
     public void delete(@PathParam("id") Integer id) {
         itemService.delete(itemService.getById(id));
     }

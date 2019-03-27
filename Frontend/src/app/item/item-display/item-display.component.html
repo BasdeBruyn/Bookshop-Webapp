@@ -1,3 +1,29 @@
-<p>
-  item-display works!
-</p>
+<div class="d-flex mt-2 justify-content-start">
+  <div class="img-container col-3">
+    <img class="img-display"
+      [src]="_item.url"
+      alt="item image"/>
+  </div>
+  <div class="col-7">
+    <div class="card mx-auto">
+      <div class="mx-2 mb-2">
+        <div class="card-title">
+          <h1>{{ _item.name }}
+            <span>${{ (_item.price/100).toFixed(2) }}</span>
+          </h1>
+          <span style="font-size: large" class="mt-1 badge badge-success"
+                *ngIf="_item.available">available</span>
+          <span style="font-size: large" class="badge badge-danger"
+                *ngIf="!_item.available">unavailable</span>
+        </div>
+        <p class="card-text">
+          {{ _item.description }}
+        </p>
+        <button *ngIf="_isAuthorized"
+                class="btn btn-primary btn-block"
+                (click)="cartService.addToCart(_item)"
+        >Add to cart</button>
+      </div>
+    </div>
+  </div>
+</div>

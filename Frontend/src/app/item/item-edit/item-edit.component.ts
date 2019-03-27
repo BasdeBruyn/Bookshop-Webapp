@@ -1,17 +1,18 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {ItemService} from '../../shared/item.service';
+import {ItemService} from '../item.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Item} from '../../shared/item.model';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-item-edit',
   templateUrl: './item-edit.component.html',
   styleUrls: ['./item-edit.component.scss']
 })
-export class ItemEditComponent implements OnInit {
-  itemId: number;
-  editMode = false;
+export class ItemEditComponent implements OnInit, OnDestroy {
+  private _itemId: number;
+  private _editMode = false;
+  private _routeSubscription: Subscription;
 
   @ViewChild('form') form: NgForm;
 
@@ -20,22 +21,26 @@ export class ItemEditComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    this.route.params.subscribe(
+    this._routeSubscription = this.route.params.subscribe(
       (params: Params) => {
         if (params['id']) {
-          this.itemId = +params['id'];
+          this._itemId = +params['id'];
           setTimeout(() => {
-            this.loadItem(this.itemId);
+            this.loadItem(this._itemId);
           });
-          this.editMode = true;
+          this._editMode = true;
         }
       }
     );
   }
 
+  ngOnDestroy(): void {
+    this._routeSubscription.unsubscribe();
+  }
+
   onSubmit() {
-    if (this.editMode) {
-      this.itemService.updateItem(this.form.value, this.itemId);
+    if (this._editMode) {
+      this.itemService.updateItem(this.form.value, this._itemId);
     } else {
       this.itemService.addItem(this.form.value);
     }
@@ -58,7 +63,7 @@ export class ItemEditComponent implements OnInit {
   }
 
   onDelete() {
-    this.itemService.removeItem(this.itemId);
+    this.itemService.removeItem(this._itemId);
     this.router.navigate(['']);
   }
 }
