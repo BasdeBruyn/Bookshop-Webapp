@@ -1,6 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
 import {Item} from './item.model';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {AuthService} from '../auth/auth.service';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class ItemService {
@@ -15,27 +19,68 @@ export class ItemService {
     'estibulum ante ipsum primis in faucibus orci luctus et ultrices posu' +
     'ere cubilia Curae; Integer mollis quam ac nisi condimentum, sed vehicula risus lobortis.';
 
-  private _items: Item[] = [
-    new Item('Algorithms', 7000, this.lorumIpsum, 'https://algs4.cs.princeton.edu/cover.png', true),
-    new Item('Fundamentals of database systems', 8000,
-      this.lorumIpsum, 'https://mediaserver.123library.org/9781292097626/cover/9781292097626.png', false)
-  ];
+  // private _items: Item[] = [
+  //   new Item('Algorithms', 7000, this.lorumIpsum, 'https://algs4.cs.princeton.edu/cover.png', true),
+  //   new Item('Fundamentals of database systems', 8000,
+  //     this.lorumIpsum, 'https://mediaserver.123library.org/9781292097626/cover/9781292097626.png', false)
+  // ];
+
+  private _items: Item[] = [];
 
   private _itemsObservable = new Subject<Item[]>();
 
+
+  constructor(private httpClient: HttpClient,
+              private authService: AuthService,
+              private router: Router) {
+    this.getItems();
+  }
+
   addItem(item: Item) {
-    this._items.push(item);
-    this.itemsUpdated();
+    const httpOptions = {headers: this.authService.getAuthHeaders()};
+    this.httpClient.post(environment.server + 'item', item, httpOptions)
+      .subscribe(
+        response => setTimeout(
+          () => this.router.navigate(['']),
+          500
+        ),
+        error => console.log(error)
+      );
   }
 
-  updateItem(item: Item, index: number) {
-    this._items[index] = item;
-    this.itemsUpdated();
+  updateItem(item: Item) {
+    const httpOptions = {headers: this.authService.getAuthHeaders()};
+    this.httpClient.put(environment.server + 'item', item, httpOptions)
+      .subscribe(
+        response => setTimeout(
+          () => this.router.navigate(['']),
+          500
+        ),
+        error => console.log(error)
+      );
   }
 
-  removeItem(index: number) {
-    this._items.splice(index, 1);
-    this.itemsUpdated();
+  removeItem(id: number) {
+    const httpOptions = {headers: this.authService.getAuthHeaders()};
+    this.httpClient.delete(environment.server + 'item/' + id, httpOptions)
+      .subscribe(
+        response => setTimeout(
+          () => this.router.navigate(['']),
+          500
+        ),
+        error => console.log(error)
+      );
+  }
+
+  getItems() {
+    this.httpClient.get<Item[]>(environment.server + 'item')
+      .subscribe(
+        response => {
+          this._items = response;
+          this.itemsUpdated();
+        },
+        error => console.log(error)
+      );
   }
 
   itemsUpdated() {

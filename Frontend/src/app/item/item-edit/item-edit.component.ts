@@ -3,6 +3,7 @@ import {NgForm} from '@angular/forms';
 import {ItemService} from '../item.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
+import {Item} from '../item.model';
 
 @Component({
   selector: 'app-item-edit',
@@ -10,7 +11,7 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./item-edit.component.scss']
 })
 export class ItemEditComponent implements OnInit, OnDestroy {
-  private _itemId: number;
+  private _item: Item;
   private _editMode = false;
   private _routeSubscription: Subscription;
 
@@ -24,9 +25,9 @@ export class ItemEditComponent implements OnInit, OnDestroy {
     this._routeSubscription = this.route.params.subscribe(
       (params: Params) => {
         if (params['id']) {
-          this._itemId = +params['id'];
+          this._item = this.itemService.items[+params['id']];
           setTimeout(() => {
-            this.loadItem(this._itemId);
+            this.loadItem();
           });
           this._editMode = true;
         }
@@ -39,31 +40,34 @@ export class ItemEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    const item: Item = this.form.value;
     if (this._editMode) {
-      this.itemService.updateItem(this.form.value, this._itemId);
+      item.id = this._item.id;
+      this.itemService.updateItem(item);
     } else {
       this.itemService.addItem(this.form.value);
     }
-    this.router.navigate(['']);
   }
 
-  loadItem(id: number) {
-    const item = this.itemService.items[id];
+  loadItem() {
     this.form.setValue({
-      name: item.name,
-      price: item.price,
-      description: item.description,
-      url: item.url,
-      available: item.available
+      name: this._item.name,
+      price: this._item.price,
+      description: this._item.description,
+      url: this._item.url,
+      available: this._item.available
     });
   }
 
   onCancel() {
-    this.form.resetForm();
+      this.router.navigate(['/']);
   }
 
   onDelete() {
-    this.itemService.removeItem(this._itemId);
-    this.router.navigate(['']);
+    this.itemService.removeItem(this._item.id);
+  }
+
+  onReset() {
+    this.form.resetForm();
   }
 }

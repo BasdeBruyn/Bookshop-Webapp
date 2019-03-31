@@ -32,7 +32,7 @@ public class ValidationService {
     }
 
     public static boolean isValidPassword(String password) {
-        return password.length() > minPasswordLength && isNotEmpty(password);
+        return password.length() >= minPasswordLength && isNotEmpty(password);
     }
 
     public static boolean isValidEmail(String email) {

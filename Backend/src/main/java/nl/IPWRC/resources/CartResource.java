@@ -40,10 +40,17 @@ public class CartResource {
     }
 
     @GET
-    @Path("/from/{userId}")
+    @Path("/items/{userId}")
     @UnitOfWork
     public Item[] getItemsFromCart(@PathParam("userId") Integer userId, @Auth User authUser){
         return cartService.getItemsFromCart(userId, authUser);
+    }
+
+    @GET
+    @Path("/from/{userId}")
+    @UnitOfWork
+    public List<CartItem> getCart(@PathParam("userId") Integer userId, @Auth User authUser) {
+        return cartService.getCart(userId, authUser);
     }
 
     @POST

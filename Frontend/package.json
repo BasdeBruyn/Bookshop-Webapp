@@ -23,7 +23,7 @@
     "@fortawesome/fontawesome-free": "^5.7.2",
     "@types/chart.js": "^2.7.48",
     "angular-bootstrap-md": "^7.4.3",
-    "chart.js": "^2.5.0",
+    "chart.js": "^2.8.0",
     "core-js": "^2.5.4",
     "hammerjs": "^2.0.8",
     "rxjs": "~6.3.3",

@@ -7,6 +7,8 @@ import {CartCheckoutComponent} from './cart-checkout/cart-checkout.component';
 import {AuthGuard} from '../auth/auth-guard.service';
 import {AuthService} from '../auth/auth.service';
 import {FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {ItemModule} from '../item/item.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import {FormsModule} from '@angular/forms';
   imports: [
     CommonModule,
     CartRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    ItemModule
   ],
   providers: [
     AuthGuard,

@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../../auth/auth.service';
 import {Item} from '../item.model';
 import {ItemService} from '../item.service';
@@ -25,6 +25,7 @@ export class ItemListDisplayComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.itemService.getItems();
     this._items = this.itemService.items;
     this._itemsSubscription = this.itemService.itemsObservable.subscribe(
       (updatedItems: Item[]) => {
@@ -60,17 +61,5 @@ export class ItemListDisplayComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigate([id], {relativeTo: this.route});
     }
-  }
-
-  onAuth() {
-    if (this._isAuthorized) {
-      this.authService.logout();
-    } else {
-      this.authService.login(new User('email', 'password', !this.authService.isAdmin));
-    }
-  }
-
-  onAdmin() {
-    this.authService.login(new User('email', 'password', !this._isAdmin));
   }
 }

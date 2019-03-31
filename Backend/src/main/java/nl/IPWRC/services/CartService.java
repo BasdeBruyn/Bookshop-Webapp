@@ -49,6 +49,17 @@ public class CartService implements CrudService<CartItem> {
         return cartItem;
     }
 
+    public List<CartItem> getCart(Integer userId) {
+        return cartDao.getCart(userId);
+    }
+
+    public List<CartItem> getCart(Integer userId, User authUser) {
+        System.out.println("userId = [" + userId + "], authUser = [" + authUser.getId() + "]");
+        AuthService.authorizeAction(userId, authUser);
+
+        return getCart(userId);
+    }
+
     public Item[] getItemsFromCart(Integer userId){
         Integer[] itemIds = cartDao.getItemIdsFromCart(userId);
         if (itemIds == null)

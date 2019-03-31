@@ -39,14 +39,17 @@ export class AuthComponent implements OnInit, OnDestroy {
   onSubmit() {
     const formData = this.form.value;
     const user = new User(formData.email, formData.password, false);
-    if (this.authService.login(user)) {
-      this.router.navigate(['']);
+    if (this._loginMode) {
+      this.authService.login(user);
     } else {
-      if (this._loginMode) {
+      this.authService.register(user);
+    }
+    setTimeout(() => {
+      if (this._loginMode && !this.authService.isAuthorized) {
         this._invalidLogin = true;
-      } else {
+      } else if (!this.authService.isAuthorized) {
         this._duplicateEmail = true;
       }
-    }
+    }, 500);
   }
 }

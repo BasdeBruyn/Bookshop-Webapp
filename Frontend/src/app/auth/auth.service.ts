@@ -1,23 +1,42 @@
 import {Injectable, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
 import {User} from './user.model';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthService implements OnInit {
   private _authorizedObservable = new Subject<boolean>();
-  private _isAuthorized = true;
+  private _isAuthorized = false;
   private _adminObservable = new Subject<boolean>();
-  private _isAdmin = true;
-  private _user;
+  private _isAdmin = false;
+  private _user = new User('bas@ha.co', 'password', true);
 
-  ngOnInit(): void { }
 
-  login(user: User): boolean {
-    this._isAuthorized = true;
-    this._authorizedObservable.next(this._isAuthorized);
-    this._isAdmin = user.isAdmin;
-    this._adminObservable.next(this._isAdmin);
-    return false;
+  constructor(private httpClient: HttpClient,
+              private router: Router) {}
+
+  getAuthHeaders() {
+    return  new HttpHeaders()
+      .append('Authorization',
+        'Basic ' + window.btoa(this._user.email + ':' + this._user.password));
+  }
+
+  ngOnInit(): void {}
+
+  login(user: User) {
+    this._user = user;
+    const httpOptions = {headers: this.getAuthHeaders()};
+    const call = this.httpClient.get<User>(environment.server + 'user/authenticate', httpOptions);
+    call.subscribe(
+      response => {
+        this.handleLogin(response);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   logout() {
@@ -25,6 +44,32 @@ export class AuthService implements OnInit {
     this._authorizedObservable.next(this._isAuthorized);
     this._isAdmin = false;
     this._adminObservable.next(this._isAdmin);
+    this._user = null;
+  }
+
+  handleLogin(user: User) {
+    this._user.isAdmin = user.isAdmin;
+    this._user.id = user.id;
+    this._isAuthorized = true;
+    this._authorizedObservable.next(this._isAuthorized);
+    this._isAdmin = this._user.isAdmin;
+    this._adminObservable.next(this._isAdmin);
+    this.router.navigate(['']);
+  }
+
+  register(user: User) {
+    user.isAdmin = false;
+    this._user = user;
+    const httpOptions = {headers: this.getAuthHeaders()};
+    const call = this.httpClient.post<User>(environment.server + 'user', user, httpOptions);
+    call.subscribe(
+      response => {
+        this.handleLogin(response);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   get authorizedObservable(): Subject<boolean> { return this._authorizedObservable; }

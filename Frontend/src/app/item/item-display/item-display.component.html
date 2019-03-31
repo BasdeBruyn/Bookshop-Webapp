@@ -1,5 +1,5 @@
 <div class="d-flex mt-2 justify-content-start">
-  <div class="img-container col-3">
+  <div class="img-container col-3 mt-0">
     <img class="img-display"
       [src]="_item.url"
       alt="item image"/>
@@ -16,12 +16,13 @@
           <span style="font-size: large" class="badge badge-danger"
                 *ngIf="!_item.available">unavailable</span>
         </div>
-        <p class="card-text">
+        <p class="card-text" style="white-space: pre-wrap;">
           {{ _item.description }}
         </p>
+        <h5 class="text-center text-success" *ngIf="_addedToCart">added item to cart</h5>
         <button *ngIf="_isAuthorized"
                 class="btn btn-primary btn-block"
-                (click)="cartService.addToCart(_item)"
+                (click)="addToCart()"
         >Add to cart</button>
       </div>
     </div>

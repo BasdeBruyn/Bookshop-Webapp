@@ -65,6 +65,8 @@ public class UserService implements CrudService<User> {
                         BCrypt.gensalt(10)
                 )
         );
+        user.setIsAdmin(false);
+        user.setId(null);
 
         return userDao.save(user);
     }

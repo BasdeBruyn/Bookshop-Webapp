@@ -13,21 +13,31 @@ import {Subscription} from 'rxjs';
 })
 export class ItemDisplayComponent implements OnInit, OnDestroy {
 
-  private _item: Item;
-  private _isAuthorized;
-  private _routeSubscription: Subscription;
-  private _authSubscription: Subscription;
-
   constructor(private route: ActivatedRoute,
               private itemService: ItemService,
               private authService: AuthService,
-              private cartService: CartService) { }
+              private cartService: CartService) {
+  }
+  private _itemId: number;
+  private _item: Item;
+  private _isAuthorized: boolean;
+  private _itemSubscription: Subscription;
+  private _routeSubscription: Subscription;
+  private _authSubscription: Subscription;
 
+  private _addedToCart = false;
+2;
   ngOnInit() {
+    this.itemService.getItems();
     this._routeSubscription = this.route.params.subscribe(
       (params: Params) => {
-          const itemId = +params['id'];
-          this._item = this.itemService.items[itemId];
+          this._itemId = +params['id'];
+          this._item = this.itemService.items[this._itemId];
+      }
+    );
+    this._itemSubscription = this.itemService.itemsObservable.subscribe(
+      (items: Item[]) => {
+        this._item = items[this._itemId];
       }
     );
     this._isAuthorized = this.authService.isAuthorized;
@@ -41,6 +51,12 @@ export class ItemDisplayComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._routeSubscription.unsubscribe();
     this._authSubscription.unsubscribe();
+  }
+
+  addToCart() {
+    this.cartService.addToCart(this._item.id);
+    this._addedToCart = true;
+    setTimeout(() => this._addedToCart = false, 2000);
   }
 
 }

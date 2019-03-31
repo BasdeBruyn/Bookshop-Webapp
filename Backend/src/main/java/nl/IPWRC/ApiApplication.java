@@ -23,8 +23,13 @@ import nl.IPWRC.persistance.UserDao;
 import nl.IPWRC.resources.ItemResource;
 import nl.IPWRC.resources.UserResource;
 import nl.IPWRC.services.AuthService;
+import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.hibernate.SessionFactory;
+
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
+import java.util.EnumSet;
 
 public class ApiApplication extends Application<APiConfiguration> {
 
@@ -46,8 +51,9 @@ public class ApiApplication extends Application<APiConfiguration> {
     }
 
     @Override
-    public void run(APiConfiguration config,
-                    Environment environment) throws ClassNotFoundException {
+    public void run(APiConfiguration config, Environment environment){
+        setupCORS(environment);
+
         initDaos(hibernate.getSessionFactory());
 
         registerResources(environment);
@@ -84,5 +90,19 @@ public class ApiApplication extends Application<APiConfiguration> {
         );
         environment.jersey().register(RolesAllowedDynamicFeature.class);
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
+    }
+
+    private void setupCORS(Environment environment) {
+        final FilterRegistration.Dynamic cors =
+                environment.servlets().addFilter("CORS", CrossOriginFilter.class);
+
+        // Configure CORS parameters
+        cors.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
+        cors.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM, "X-Requested-With,Content-Type,Accept,Origin,Authorization");
+        cors.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM, "OPTIONS,GET,PUT,POST,DELETE,HEAD");
+        cors.setInitParameter(CrossOriginFilter.ALLOW_CREDENTIALS_PARAM, "true");
+
+        // Add URL mapping
+        cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
     }
 }

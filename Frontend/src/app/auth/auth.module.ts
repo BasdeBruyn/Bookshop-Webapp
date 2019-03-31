@@ -6,6 +6,7 @@ import {AuthGuard} from './auth-guard.service';
 import {AdminGuard} from './admin-guard.service';
 import {AuthRoutingModule} from './auth-routing.module';
 import {FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import {FormsModule} from '@angular/forms';
   imports: [
     CommonModule,
     AuthRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [
     AuthService,

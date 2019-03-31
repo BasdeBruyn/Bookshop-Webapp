@@ -11,6 +11,7 @@ import {AuthGuard} from '../auth/auth-guard.service';
 import {AuthService} from '../auth/auth.service';
 import {AdminGuard} from '../auth/admin-guard.service';
 import {CartService} from '../cart/cart.service';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,11 @@ import {CartService} from '../cart/cart.service';
   imports: [
     CommonModule,
     ItemRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
+  ],
+  exports: [
+    ShortenPipe
   ],
   providers: [
     AuthGuard,

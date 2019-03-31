@@ -63,10 +63,10 @@ public class ItemService implements CrudService<Item> {
         ValidationService.validate(errors -> {
             if (item.getPrice() <= 0)
                 errors.add("Invalid price");
-            if (item.getName().length() >= minNameLength)
-                errors.add("Email already exists");
+            if (item.getName().length() < minNameLength)
+                errors.add("Name should be at least " + minNameLength + " characters long");
             if (!ValidationService.isValidUrl(item.getUrl()))
-                errors.add("Invalid password");
+                errors.add("Invalid URL");
         });
     }
 }

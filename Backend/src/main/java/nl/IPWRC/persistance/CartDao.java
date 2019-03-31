@@ -29,6 +29,15 @@ public class CartDao extends GenericDao<CartItem> {
         return null;
     }
 
+    public List<CartItem> getCart(Integer userId) {
+        String cartQuery = "from CartItem ci where ci.userId = :userId";
+        Query<CartItem> cartQueryObj = currentSession().createQuery(cartQuery, CartItem.class);
+
+        cartQueryObj.setParameter("userId", userId);
+
+        return cartQueryObj.list();
+    }
+
     public Integer[] getItemIdsFromCart(Integer userId) {
         String cartQuery = "select ci.itemId from CartItem ci where ci.userId = :userId";
         Query<Integer> cartQueryObj = currentSession().createQuery(cartQuery, Integer.class);

@@ -46,6 +46,7 @@ public class ItemResource {
     @UnitOfWork
     @RolesAllowed("admin")
     public Item update(@Valid Item item) throws InvalidInputException {
+        System.out.println("item = " + item);
         itemService.update(item);
 
         return item;
