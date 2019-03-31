@@ -1,40 +1,27 @@
-<button class="btn"
-        (click)="onAuth()"
-        [ngClass]="_isAuthorized ? 'btn-success': 'btn-primary'"
->authorize</button>
-<button class="btn"
-        (click)="onAdmin()"
-        [ngClass]="_isAdmin ? 'btn-success': 'btn-primary'"
->admin</button>
-<button class="btn btn-dark"
-        [routerLink]="['/cart']"
->admin</button>
 <div class="row d-flex justify-content-center mt-2 mx-0">
   <button *ngIf="_isAdmin"
           class="btn btn-success"
           (click)="onAddNewItem()">Add new Item</button>
 </div>
-<div class="row col-sm-12 d-inline-flex justify-content-start flex-wrap">
-  <div *ngFor="let item of _items; let i = index" class="my-3">
+<div class="d-inline-flex flex-wrap justify-content-start" style="width: 90%!important; margin: 0 5% 0 5%!important;">
+  <div *ngFor="let item of _items; let i = index" class="my-3" style="width: 25%!important; padding-left: 2%; padding-right: 2%">
     <a (click)="onItemClicked(i)" style="cursor: pointer">
-      <div class="col-sm-6">
-        <div class="card mx-3 item-card">
-          <div class="img-container">
-            <img class="card-img-top mt-2"
-                 [src]="item.url" alt="item image"/>
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">{{ item.name }}
-              <span>${{ (item.price/100).toFixed(2) }}</span>
-            </h5>
-            <p class="card-text">
-              {{ item.description | shorten:100 }}
-            </p>
-            <span class="badge badge-success" *ngIf="item.available">available</span>
-            <span class="badge badge-danger" *ngIf="!item.available">unavailable</span>
-          </div>
+      <div class="card item-card">
+        <div class="img-container" style="margin-top: 0.5rem!important; margin-bottom: 1rem!important;">
+          <img class="card-img-top mt-2" [src]="item.url" alt="item image"/>
         </div>
+        <div class="card-body" style="padding-bottom: 0!important;padding-top: 0!important; max-height: 10rem!important;">
+          <h5 class="card-title">{{ item.name | shorten:35 }}
+            <span class="ml-2" style="color: #B12704">${{ (item.price/100).toFixed(2) }}</span>
+          </h5>
+          <p class="card-text mb-0" style="margin-bottom: 0!important;">
+            {{ item.description | shorten:125 }}
+          </p>
+        </div>
+        <span class="badge badge-success available" *ngIf="item.available">available</span>
+        <span class="badge badge-danger available" *ngIf="!item.available">unavailable</span>
       </div>
     </a>
   </div>
 </div>
+
