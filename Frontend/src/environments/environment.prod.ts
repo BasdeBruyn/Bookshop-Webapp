@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  server: 'http://www.basdebruyn.nl:8080/'
+  server: 'https://www.basdebruyn.nl:8083/'
 };

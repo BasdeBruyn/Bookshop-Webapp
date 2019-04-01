@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  server: 'http://www.basdebruyn.nl:8080/'
+  server: 'https://www.basdebruyn.nl:8083/'
 };
 
 /*
