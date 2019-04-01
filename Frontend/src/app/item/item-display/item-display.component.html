@@ -1,26 +1,26 @@
 <div class="d-flex mt-2 justify-content-start">
   <div class="img-container col-3 mt-0">
     <img class="img-display"
-      [src]="_item.url"
+      [src]="item.url"
       alt="item image"/>
   </div>
   <div class="col-7">
     <div class="card mx-auto">
       <div class="mx-2 mb-2">
         <div class="card-title">
-          <h1>{{ _item.name }}
-            <span>${{ (_item.price/100).toFixed(2) }}</span>
+          <h1>{{ item.name }}
+            <span>${{ (item.price/100).toFixed(2) }}</span>
           </h1>
           <span style="font-size: large" class="mt-1 badge badge-success"
-                *ngIf="_item.available">available</span>
+                *ngIf="item.available">available</span>
           <span style="font-size: large" class="badge badge-danger"
-                *ngIf="!_item.available">unavailable</span>
+                *ngIf="!item.available">unavailable</span>
         </div>
         <p class="card-text" style="white-space: pre-wrap;">
-          {{ _item.description }}
+          {{ item.description }}
         </p>
-        <h5 class="text-center text-success" *ngIf="_addedToCart">added item to cart</h5>
-        <button *ngIf="_isAuthorized"
+        <h5 class="text-center text-success" *ngIf="addedToCart">added item to cart</h5>
+        <button *ngIf="isAuthorized"
                 class="btn btn-primary btn-block"
                 (click)="addToCart()"
         >Add to cart</button>

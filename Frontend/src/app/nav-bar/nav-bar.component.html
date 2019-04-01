@@ -3,13 +3,13 @@
 
   <div class="collapse navbar-collapse">
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item" *ngIf="!_isAuthorized">
+      <li class="nav-item" *ngIf="!isAuthorized">
         <a class="nav-link" [routerLink]="['auth', true]">Login</a>
       </li>
-      <li class="nav-item" *ngIf="_isAuthorized && !authService.isAdmin">
+      <li class="nav-item" *ngIf="isAuthorized && !authService.isAdmin">
         <a class="nav-link" [routerLink]="['cart']">My Cart</a>
       </li>
-      <li class="nav-item" style="cursor: pointer" *ngIf="_isAuthorized">
+      <li class="nav-item" style="cursor: pointer" *ngIf="isAuthorized">
         <a class="nav-link" [routerLink]="['']" (click)="authService.logout()">Logout</a>
       </li>
     </ul>

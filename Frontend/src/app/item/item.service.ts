@@ -19,7 +19,7 @@ export class ItemService {
     'estibulum ante ipsum primis in faucibus orci luctus et ultrices posu' +
     'ere cubilia Curae; Integer mollis quam ac nisi condimentum, sed vehicula risus lobortis.';
 
-  // private _items: Item[] = [
+  // private items: Item[] = [
   //   new Item('Algorithms', 7000, this.lorumIpsum, 'https://algs4.cs.princeton.edu/cover.png', true),
   //   new Item('Fundamentals of database systems', 8000,
   //     this.lorumIpsum, 'https://mediaserver.123library.org/9781292097626/cover/9781292097626.png', false)

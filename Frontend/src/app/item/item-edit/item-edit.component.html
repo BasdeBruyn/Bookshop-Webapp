@@ -65,8 +65,8 @@
              name="save"
              value="Save">
       <button type="button" class="btn btn-primary" (click)="onCancel()">Cancel</button>
-      <button type="button" *ngIf="_editMode" class="btn btn-danger mx-2" (click)="onDelete()">Delete</button>
-      <button type="button" *ngIf="!_editMode" class="btn btn-danger mx-2" (click)="onReset()">Reset</button>
+      <button type="button" *ngIf="editMode" class="btn btn-danger mx-2" (click)="onDelete()">Delete</button>
+      <button type="button" *ngIf="!editMode" class="btn btn-danger mx-2" (click)="onReset()">Reset</button>
     </form>
   </div>
   <div class="col-sm-3 m-auto">

@@ -12,11 +12,11 @@ import {Subscription} from 'rxjs';
 })
 export class AuthComponent implements OnInit, OnDestroy {
 
-  private _loginMode = false;
-  private _routeSubscription: Subscription;
-  private _passwordShown = false;
-  private _duplicateEmail = false;
-  private _invalidLogin = false;
+  public loginMode = false;
+  public routeSubscription: Subscription;
+  public passwordShown = false;
+  public duplicateEmail = false;
+  public invalidLogin = false;
 
   constructor(private authService: AuthService,
               private route: ActivatedRoute,
@@ -25,30 +25,30 @@ export class AuthComponent implements OnInit, OnDestroy {
   @ViewChild('form') form: NgForm;
 
   ngOnInit() {
-    this._routeSubscription = this.route.params.subscribe(
+    this.routeSubscription = this.route.params.subscribe(
       (params: Params) => {
-        this._loginMode = params['login'] === 'true';
+        this.loginMode = params['login'] === 'true';
       }
     );
   }
 
   ngOnDestroy(): void {
-    this._routeSubscription.unsubscribe();
+    this.routeSubscription.unsubscribe();
   }
 
   onSubmit() {
     const formData = this.form.value;
     const user = new User(formData.email, formData.password, false);
-    if (this._loginMode) {
+    if (this.loginMode) {
       this.authService.login(user);
     } else {
       this.authService.register(user);
     }
     setTimeout(() => {
-      if (this._loginMode && !this.authService.isAuthorized) {
-        this._invalidLogin = true;
+      if (this.loginMode && !this.authService.isAuthorized) {
+        this.invalidLogin = true;
       } else if (!this.authService.isAuthorized) {
-        this._duplicateEmail = true;
+        this.duplicateEmail = true;
       }
     }, 500);
   }

@@ -123,7 +123,7 @@
       </div>
     </div>
     <hr>
-    <div *ngFor="let item of _items; let i = index">
+    <div *ngFor="let item of items; let i = index">
       <div class="row">
         <div class="col-9">
           <h5>{{ item.name }}</h5>
@@ -136,7 +136,7 @@
     <hr class="mb-1 mt-1" style="background-color: black">
     <div class="row">
       <div class="col-8">Total:</div>
-      <div class="col-4 text-right">${{ (_totalPrice/100).toFixed(2) }}</div>
+      <div class="col-4 text-right">${{ (totalPrice/100).toFixed(2) }}</div>
     </div>
     <input [disabled]="!form.valid"
            type="submit"

@@ -11,38 +11,38 @@ import {Item} from '../item.model';
   styleUrls: ['./item-edit.component.scss']
 })
 export class ItemEditComponent implements OnInit, OnDestroy {
-  private _item: Item;
-  private _editMode = false;
-  private _routeSubscription: Subscription;
+  public item: Item;
+  public editMode = false;
+  public routeSubscription: Subscription;
 
   @ViewChild('form') form: NgForm;
 
-  constructor(private itemService: ItemService,
-              private route: ActivatedRoute,
-              private router: Router) { }
+  constructor(public itemService: ItemService,
+              public route: ActivatedRoute,
+              public router: Router) { }
 
   ngOnInit() {
-    this._routeSubscription = this.route.params.subscribe(
+    this.routeSubscription = this.route.params.subscribe(
       (params: Params) => {
         if (params['id']) {
-          this._item = this.itemService.items[+params['id']];
+          this.item = this.itemService.items[+params['id']];
           setTimeout(() => {
             this.loadItem();
           });
-          this._editMode = true;
+          this.editMode = true;
         }
       }
     );
   }
 
   ngOnDestroy(): void {
-    this._routeSubscription.unsubscribe();
+    this.routeSubscription.unsubscribe();
   }
 
   onSubmit() {
     const item: Item = this.form.value;
-    if (this._editMode) {
-      item.id = this._item.id;
+    if (this.editMode) {
+      item.id = this.item.id;
       this.itemService.updateItem(item);
     } else {
       this.itemService.addItem(this.form.value);
@@ -51,11 +51,11 @@ export class ItemEditComponent implements OnInit, OnDestroy {
 
   loadItem() {
     this.form.setValue({
-      name: this._item.name,
-      price: this._item.price,
-      description: this._item.description,
-      url: this._item.url,
-      available: this._item.available
+      name: this.item.name,
+      price: this.item.price,
+      description: this.item.description,
+      url: this.item.url,
+      available: this.item.available
     });
   }
 
@@ -64,7 +64,7 @@ export class ItemEditComponent implements OnInit, OnDestroy {
   }
 
   onDelete() {
-    this.itemService.removeItem(this._item.id);
+    this.itemService.removeItem(this.item.id);
   }
 
   onReset() {

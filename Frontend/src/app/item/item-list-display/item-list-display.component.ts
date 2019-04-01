@@ -4,7 +4,6 @@ import {Item} from '../item.model';
 import {ItemService} from '../item.service';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
-import {User} from '../../auth/user.model';
 
 @Component({
   selector: 'app-item-display',
@@ -12,43 +11,43 @@ import {User} from '../../auth/user.model';
   styleUrls: ['./item-list-display.component.scss']
 })
 export class ItemListDisplayComponent implements OnInit, OnDestroy {
-  private _items: Item[];
-  private _itemsSubscription: Subscription;
-  private _isAuthorized: boolean;
-  private _authSubscription: Subscription;
-  private _isAdmin: boolean;
-  private _adminSubscription: Subscription;
+  public items: Item[];
+  public itemsSubscription: Subscription;
+  public isAuthorized: boolean;
+  public authSubscription: Subscription;
+  public isAdmin: boolean;
+  public adminSubscription: Subscription;
 
-  constructor(private authService: AuthService,
-              private itemService: ItemService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(public authService: AuthService,
+              public itemService: ItemService,
+              public router: Router,
+              public route: ActivatedRoute) { }
 
   ngOnInit() {
     this.itemService.getItems();
-    this._items = this.itemService.items;
-    this._itemsSubscription = this.itemService.itemsObservable.subscribe(
+    this.items = this.itemService.items;
+    this.itemsSubscription = this.itemService.itemsObservable.subscribe(
       (updatedItems: Item[]) => {
-        this._items = updatedItems;
+        this.items = updatedItems;
     });
-    this._isAuthorized = this.authService.isAuthorized;
-    this._authSubscription = this.authService.authorizedObservable.subscribe(
+    this.isAuthorized = this.authService.isAuthorized;
+    this.authSubscription = this.authService.authorizedObservable.subscribe(
       (isAuthorized: boolean) => {
-        this._isAuthorized = isAuthorized;
+        this.isAuthorized = isAuthorized;
       }
     );
-    this._isAdmin = this.authService.isAdmin;
-    this._adminSubscription = this.authService.adminObservable.subscribe(
+    this.isAdmin = this.authService.isAdmin;
+    this.adminSubscription = this.authService.adminObservable.subscribe(
       (isAdmin: boolean) => {
-        this._isAdmin = isAdmin;
+        this.isAdmin = isAdmin;
       }
     );
   }
 
   ngOnDestroy(): void {
-    this._itemsSubscription.unsubscribe();
-    this._authSubscription.unsubscribe();
-    this._adminSubscription.unsubscribe();
+    this.itemsSubscription.unsubscribe();
+    this.authSubscription.unsubscribe();
+    this.adminSubscription.unsubscribe();
   }
 
   onAddNewItem() {

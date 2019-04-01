@@ -9,32 +9,32 @@ import {Subscription} from 'rxjs';
 })
 export class NavBarComponent implements OnInit, OnDestroy {
 
-  constructor(private authService: AuthService) {}
+  constructor(public authService: AuthService) {}
 
-  private _isAuthorized;
-  private _isAdmin;
+  public isAuthorized;
+  public isAdmin;
 
-  private _authSubscription: Subscription;
-  private _adminSubscription: Subscription;
+  public authSubscription: Subscription;
+  public adminSubscription: Subscription;
 
   ngOnInit() {
-    this._isAuthorized = this.authService.isAuthorized;
-    this._authSubscription = this.authService.authorizedObservable.subscribe(
+    this.isAuthorized = this.authService.isAuthorized;
+    this.authSubscription = this.authService.authorizedObservable.subscribe(
       (isAuthorized: boolean) => {
-        this._isAuthorized = isAuthorized;
+        this.isAuthorized = isAuthorized;
       }
     );
-    this._isAdmin = this.authService.isAdmin;
-    this._adminSubscription = this.authService.adminObservable.subscribe(
+    this.isAdmin = this.authService.isAdmin;
+    this.adminSubscription = this.authService.adminObservable.subscribe(
       (isAdmin: boolean) => {
-        this._isAdmin = isAdmin;
+        this.isAdmin = isAdmin;
       }
     );
   }
 
   ngOnDestroy(): void {
-    this._authSubscription.unsubscribe();
-    this._adminSubscription.unsubscribe();
+    this.authSubscription.unsubscribe();
+    this.adminSubscription.unsubscribe();
   }
 
 }

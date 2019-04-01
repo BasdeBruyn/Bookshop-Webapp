@@ -13,50 +13,50 @@ import {Subscription} from 'rxjs';
 })
 export class ItemDisplayComponent implements OnInit, OnDestroy {
 
-  constructor(private route: ActivatedRoute,
-              private itemService: ItemService,
-              private authService: AuthService,
-              private cartService: CartService) {
+  constructor(public route: ActivatedRoute,
+              public itemService: ItemService,
+              public authService: AuthService,
+              public cartService: CartService) {
   }
-  private _itemId: number;
-  private _item: Item;
-  private _isAuthorized: boolean;
-  private _itemSubscription: Subscription;
-  private _routeSubscription: Subscription;
-  private _authSubscription: Subscription;
+  public itemId: number;
+  public item: Item;
+  public isAuthorized: boolean;
+  public itemSubscription: Subscription;
+  public routeSubscription: Subscription;
+  public authSubscription: Subscription;
 
-  private _addedToCart = false;
+  public addedToCart = false;
 2;
   ngOnInit() {
     this.itemService.getItems();
-    this._routeSubscription = this.route.params.subscribe(
+    this.routeSubscription = this.route.params.subscribe(
       (params: Params) => {
-          this._itemId = +params['id'];
-          this._item = this.itemService.items[this._itemId];
+          this.itemId = +params['id'];
+          this.item = this.itemService.items[this.itemId];
       }
     );
-    this._itemSubscription = this.itemService.itemsObservable.subscribe(
+    this.itemSubscription = this.itemService.itemsObservable.subscribe(
       (items: Item[]) => {
-        this._item = items[this._itemId];
+        this.item = items[this.itemId];
       }
     );
-    this._isAuthorized = this.authService.isAuthorized;
-    this._authSubscription = this.authService.authorizedObservable.subscribe(
+    this.isAuthorized = this.authService.isAuthorized;
+    this.authSubscription = this.authService.authorizedObservable.subscribe(
       (isAuthorized: boolean) => {
-        this._isAuthorized = isAuthorized;
+        this.isAuthorized = isAuthorized;
       }
     );
   }
 
   ngOnDestroy(): void {
-    this._routeSubscription.unsubscribe();
-    this._authSubscription.unsubscribe();
+    this.routeSubscription.unsubscribe();
+    this.authSubscription.unsubscribe();
   }
 
   addToCart() {
-    this.cartService.addToCart(this._item.id);
-    this._addedToCart = true;
-    setTimeout(() => this._addedToCart = false, 2000);
+    this.cartService.addToCart(this.item.id);
+    this.addedToCart = true;
+    setTimeout(() => this.addedToCart = false, 2000);
   }
 
 }

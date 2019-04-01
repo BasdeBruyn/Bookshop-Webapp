@@ -1,10 +1,10 @@
 <div class="row d-flex justify-content-center mt-2 mx-0">
-  <button *ngIf="_isAdmin"
+  <button *ngIf="isAdmin"
           class="btn btn-success"
           (click)="onAddNewItem()">Add new Item</button>
 </div>
 <div class="d-inline-flex flex-wrap justify-content-start" style="width: 90%!important; margin: 0 5% 0 5%!important;">
-  <div *ngFor="let item of _items; let i = index" class="my-3" style="width: 25%!important; padding-left: 2%; padding-right: 2%">
+  <div *ngFor="let item of items; let i = index" class="my-3" style="width: 25%!important; padding-left: 2%; padding-right: 2%">
     <a (click)="onItemClicked(i)" style="cursor: pointer">
       <div class="card item-card">
         <div class="img-container" style="margin-top: 0.5rem!important; margin-bottom: 1rem!important;">

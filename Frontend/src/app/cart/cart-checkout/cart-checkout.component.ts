@@ -13,21 +13,21 @@ import {AuthService} from '../../auth/auth.service';
 })
 export class CartCheckoutComponent implements OnInit {
 
-  private _items: Item[];
-  private _totalPrice = 0;
-  private _previousOrderSubscription: Subscription;
-  @ViewChild('form') private _form: NgForm;
+  public items: Item[];
+  public totalPrice = 0;
+  public previousOrderSubscription: Subscription;
+  @ViewChild('form') public _form: NgForm;
 
-  constructor(private cartService: CartService,
-              private authService: AuthService) { }
+  constructor(public cartService: CartService,
+              public authService: AuthService) { }
 
   ngOnInit() {
-    this._items = this.cartService.items;
-    for (const item of this._items) {
-      this._totalPrice += item.price;
+    this.items = this.cartService.items;
+    for (const item of this.items) {
+      this.totalPrice += item.price;
     }
     this.cartService.getPreviousOrder();
-    this._previousOrderSubscription = this.cartService.previousOrderObservable.subscribe(
+    this.previousOrderSubscription = this.cartService.previousOrderObservable.subscribe(
       (order: Order) => {
         if (order !== null) {
           this.loadPreviousOrder(order);
@@ -38,7 +38,7 @@ export class CartCheckoutComponent implements OnInit {
 
   onSubmit() {
     const order: Order = this._form.value;
-    order.totalPrice = this._totalPrice;
+    order.totalPrice = this.totalPrice;
     order.userId = this.authService.user.id;
     this.cartService.order(order);
   }

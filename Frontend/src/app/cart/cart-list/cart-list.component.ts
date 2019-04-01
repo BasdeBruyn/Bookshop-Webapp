@@ -10,23 +10,23 @@ import {Subscription} from 'rxjs';
 })
 export class CartListComponent implements OnInit, OnDestroy {
 
-  private _items: Item[] = [];
-  private _cartSubscription: Subscription;
+  public items: Item[] = [];
+  public cartSubscription: Subscription;
 
-  constructor(private cartService: CartService) { }
+  constructor(public cartService: CartService) { }
 
   ngOnInit() {
     this.cartService.getItems();
-    this._items = this.cartService.items;
-    this._cartSubscription = this.cartService.itemObservable.subscribe(
+    this.items = this.cartService.items;
+    this.cartSubscription = this.cartService.itemObservable.subscribe(
       (items: Item[]) => {
-        this._items = items;
+        this.items = items;
       }
     );
   }
 
   ngOnDestroy() {
-    this._cartSubscription.unsubscribe();
+    this.cartSubscription.unsubscribe();
   }
 
   onRemove(index: number) {
