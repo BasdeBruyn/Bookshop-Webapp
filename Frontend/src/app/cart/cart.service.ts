@@ -41,8 +41,10 @@ export class CartService {
     this.httpClient.get<Item[]>(environment.server + 'cart/items/' + userId, httpOptions)
       .subscribe(
         response => {
-          this._items = response;
-          this.itemsUpdated();
+          if (response !== null) {
+            this._items = response;
+            this.itemsUpdated();
+          }
         },
         error => console.log(error)
       );

@@ -10,7 +10,7 @@ import {Subscription} from 'rxjs';
 })
 export class CartListComponent implements OnInit, OnDestroy {
 
-  private _items: Item[];
+  private _items: Item[] = [];
   private _cartSubscription: Subscription;
 
   constructor(private cartService: CartService) { }
