@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import java.security.Principal;
 
 @Entity
+@Table(name = "users")
 public class User implements Principal {
     @Id
     @JsonProperty
