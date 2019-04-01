@@ -9,7 +9,7 @@ database:
   password: Password
 
   # the JDBC URL
-  url: jdbc:mariadb://Host/Database
+  url: jdbc:postgresql://Host/Database
 
   # any properties specific to your JDBC driver:
   properties:

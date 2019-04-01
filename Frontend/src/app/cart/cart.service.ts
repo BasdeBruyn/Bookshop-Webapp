@@ -43,8 +43,10 @@ export class CartService {
         response => {
           if (response !== null) {
             this._items = response;
-            this.itemsUpdated();
+          } else {
+            this._items = [];
           }
+          this.itemsUpdated();
         },
         error => console.log(error)
       );

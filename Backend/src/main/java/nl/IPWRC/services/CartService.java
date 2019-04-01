@@ -54,7 +54,6 @@ public class CartService implements CrudService<CartItem> {
     }
 
     public List<CartItem> getCart(Integer userId, User authUser) {
-        System.out.println("userId = [" + userId + "], authUser = [" + authUser.getId() + "]");
         AuthService.authorizeAction(userId, authUser);
 
         return getCart(userId);
