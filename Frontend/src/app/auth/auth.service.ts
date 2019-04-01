@@ -2,8 +2,8 @@ import {Injectable, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
 import {User} from './user.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {environment} from '../../environments/environment';
 import {Router} from '@angular/router';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class AuthService implements OnInit {
