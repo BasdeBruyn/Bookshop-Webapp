@@ -109,7 +109,7 @@ public class UserService implements CrudService<User> {
         ValidationService.validate(errors -> {
             if (! ValidationService.isValidEmail(user.getEmail()))
                 errors.add("Invalid email");
-            if (emailExists(user.getEmail()))
+            if (!update && emailExists(user.getEmail()))
                 errors.add("Email already exists");
             if (!update && ! ValidationService.isValidPassword(user.getPassword()))
                 errors.add("Invalid password");
