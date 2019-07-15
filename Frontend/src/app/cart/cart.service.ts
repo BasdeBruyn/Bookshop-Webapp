@@ -11,20 +11,7 @@ import {CartItem} from './cart-item.model';
 @Injectable()
 export class CartService {
 
-  private _items: Item[] = [
-    // new Item('Algorithms', 7000, '', 'https://algs4.cs.princeton.edu/cover.png', true),
-    // new Item('Fundamentals of database systems', 8000,
-    //   '', 'https://mediaserver.123library.org/9781292097626/cover/9781292097626.png', true),
-    // new Item('Algorithms', 7000, '', 'https://algs4.cs.princeton.edu/cover.png', true),
-    // new Item('Fundamentals of database systems', 8000,
-    //   '', 'https://mediaserver.123library.org/9781292097626/cover/9781292097626.png', true),
-    // new Item('Algorithms', 7000, '', 'https://algs4.cs.princeton.edu/cover.png', true),
-    // new Item('Fundamentals of database systems', 8000,
-    //   '', 'https://mediaserver.123library.org/9781292097626/cover/9781292097626.png', true),
-    // new Item('Algorithms', 7000, '', 'https://algs4.cs.princeton.edu/cover.png', true),
-    // new Item('Fundamentals of database systems', 8000,
-    //   '', 'https://mediaserver.123library.org/9781292097626/cover/9781292097626.png', true)
-  ];
+  private _items: Item[] = [];
   private _cartItems: CartItem[] = [];
   private _itemObservable = new Subject<Item[]>();
 
@@ -74,7 +61,7 @@ export class CartService {
     const httpOptions = {headers: this.authService.getAuthHeaders()};
     this.httpClient.delete(environment.server + 'cart/' + cartItemId, httpOptions)
       .subscribe(
-        response => this.getItems(),
+        () => this.getItems(),
         error => console.log(error)
       );
   }
@@ -100,7 +87,7 @@ export class CartService {
     const httpOptions = {headers: this.authService.getAuthHeaders()};
     this.httpClient.delete(environment.server + 'cart/from/' + userId, httpOptions)
       .subscribe(
-        response => this.getItems(),
+        () => this.getItems(),
         error => console.log(error)
       );
   }
@@ -109,7 +96,7 @@ export class CartService {
     const httpOptions = {headers: this.authService.getAuthHeaders()};
     this.httpClient.post(environment.server + 'order', order, httpOptions)
       .subscribe(
-        response => {
+        () => {
           this.emptyCart();
           this.router.navigate(['']);
         },
