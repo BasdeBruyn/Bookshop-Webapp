@@ -1,6 +1,9 @@
 ### Java ###
+out/
+*.class
 
 ### Maven ###
+target/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -46,6 +49,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+appsettings.json
 
 #Dropwizard
 config.yml
