@@ -1,4 +1,4 @@
-package nl.IPWRC.persistance;
+package nl.Bookshop.persistance;
 
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;

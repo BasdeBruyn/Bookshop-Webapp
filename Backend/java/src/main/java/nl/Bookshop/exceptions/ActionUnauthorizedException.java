@@ -1,4 +1,4 @@
-package nl.IPWRC.exceptions;
+package nl.Bookshop.exceptions;
 
 import javax.ws.rs.core.Response;
 

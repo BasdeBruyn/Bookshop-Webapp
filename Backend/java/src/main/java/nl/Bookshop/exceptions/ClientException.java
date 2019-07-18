@@ -1,4 +1,4 @@
-package nl.IPWRC.exceptions;
+package nl.Bookshop.exceptions;
 
 public class ClientException extends RuntimeException {
     private int code;

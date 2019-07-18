@@ -1,9 +1,9 @@
-package nl.IPWRC.resources;
+package nl.Bookshop.resources;
 
 import io.dropwizard.hibernate.UnitOfWork;
-import nl.IPWRC.services.ItemService;
-import nl.IPWRC.exceptions.InvalidInputException;
-import nl.IPWRC.models.Item;
+import nl.Bookshop.services.ItemService;
+import nl.Bookshop.exceptions.InvalidInputException;
+import nl.Bookshop.models.Item;
 
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;

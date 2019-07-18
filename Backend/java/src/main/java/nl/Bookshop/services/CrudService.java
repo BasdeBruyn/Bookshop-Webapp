@@ -1,7 +1,6 @@
-package nl.IPWRC.services;
+package nl.Bookshop.services;
 
-import nl.IPWRC.exceptions.InvalidInputException;
-import nl.IPWRC.models.User;
+import nl.Bookshop.exceptions.InvalidInputException;
 
 import java.util.List;
 

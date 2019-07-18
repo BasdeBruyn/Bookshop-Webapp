@@ -1,4 +1,4 @@
-package nl.IPWRC.exceptions;
+package nl.Bookshop.exceptions;
 
 import io.dropwizard.jersey.errors.ErrorMessage;
 

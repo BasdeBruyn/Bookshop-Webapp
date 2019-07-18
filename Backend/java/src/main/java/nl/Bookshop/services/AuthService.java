@@ -1,13 +1,13 @@
-package nl.IPWRC.services;
+package nl.Bookshop.services;
 
 import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.Authenticator;
 import io.dropwizard.auth.Authorizer;
 import io.dropwizard.auth.basic.BasicCredentials;
 import io.dropwizard.hibernate.UnitOfWork;
-import nl.IPWRC.exceptions.ActionUnauthorizedException;
-import nl.IPWRC.models.User;
-import nl.IPWRC.persistance.UserDao;
+import nl.Bookshop.exceptions.ActionUnauthorizedException;
+import nl.Bookshop.models.User;
+import nl.Bookshop.persistance.UserDao;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.Optional;

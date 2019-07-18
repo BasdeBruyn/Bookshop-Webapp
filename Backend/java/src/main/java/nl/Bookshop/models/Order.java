@@ -1,4 +1,4 @@
-package nl.IPWRC.models;
+package nl.Bookshop.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

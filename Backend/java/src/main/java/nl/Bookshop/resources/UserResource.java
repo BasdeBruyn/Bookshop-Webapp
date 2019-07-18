@@ -1,13 +1,12 @@
-package nl.IPWRC.resources;
+package nl.Bookshop.resources;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import io.dropwizard.auth.Auth;
 import io.dropwizard.hibernate.UnitOfWork;
-import nl.IPWRC.services.UserService;
-import nl.IPWRC.exceptions.InvalidInputException;
-import nl.IPWRC.models.User;
+import nl.Bookshop.services.UserService;
+import nl.Bookshop.exceptions.InvalidInputException;
+import nl.Bookshop.models.User;
 
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import javax.ws.rs.*;

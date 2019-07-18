@@ -1,13 +1,12 @@
-package nl.IPWRC.resources;
+package nl.Bookshop.resources;
 
 import io.dropwizard.auth.Auth;
 import io.dropwizard.hibernate.UnitOfWork;
-import nl.IPWRC.exceptions.InvalidInputException;
-import nl.IPWRC.models.Order;
-import nl.IPWRC.models.User;
-import nl.IPWRC.services.OrderService;
+import nl.Bookshop.exceptions.InvalidInputException;
+import nl.Bookshop.models.Order;
+import nl.Bookshop.models.User;
+import nl.Bookshop.services.OrderService;
 
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import javax.ws.rs.*;

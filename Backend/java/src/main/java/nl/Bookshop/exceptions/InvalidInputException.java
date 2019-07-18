@@ -1,4 +1,4 @@
-package nl.IPWRC.exceptions;
+package nl.Bookshop.exceptions;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.dropwizard.jackson.Jackson;

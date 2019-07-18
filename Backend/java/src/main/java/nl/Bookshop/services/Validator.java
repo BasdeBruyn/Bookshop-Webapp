@@ -1,4 +1,4 @@
-package nl.IPWRC.services;
+package nl.Bookshop.services;
 
 import java.util.List;
 

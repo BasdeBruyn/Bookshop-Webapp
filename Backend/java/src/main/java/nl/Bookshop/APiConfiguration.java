@@ -1,4 +1,4 @@
-package nl.IPWRC;
+package nl.Bookshop;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
