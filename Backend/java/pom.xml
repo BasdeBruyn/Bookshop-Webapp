@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>s1106289</groupId>
-    <artifactId>IPRWC</artifactId>
+    <artifactId>Bookshop_Webapp</artifactId>
     <version>1</version>
     <build>
         <plugins>
@@ -36,7 +36,7 @@
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>nl.IPWRC.ApiApplication</mainClass>
+                                    <mainClass>nl.Bookshop.ApiApplication</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
